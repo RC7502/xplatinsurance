@@ -1,0 +1,27 @@
+﻿<dl class="dl-horizontal">
+
+  <dt>Customer ID:</dt>
+
+  <dd>{{vm.thisClaim.CustomerID}}</dd>
+
+  <dt>Incident Date:</dt>
+
+  <dd>{{vm.thisClaim.IncidentDate}}</dd>
+
+  <dt>Report Date (UTC):</dt>
+
+  <dd>{{vm.thisClaim.ReportDateTimeUtc}}</dd>
+
+  <dt>Location:</dt>
+
+  <dd>{{vm.thisClaim.Location}}</dd>
+
+  <dt>Status:</dt>
+
+  <dd>{{vm.thisClaim.StatusID}}</dd>
+
+</dl>
+
+<a href="#/" class="btn">Back to claims</a>
+<a href="#/editclaim/{{vm.thisClaim.ClaimID}}" class="btn">Edit</a>
+<a href="#" data-ng-click="vm.confirmDelete()" class="btn">Delete</a>

@@ -1,0 +1,22 @@
+﻿<table class="table table-responsive table-striped">
+  <tr>
+    <th>Customer ID</th>
+    <th>Incident Date</th>
+    <th>Report Date</th>
+    <th>Location</th>
+    <th>Status</th>
+    <th></th>
+  </tr>
+  <tr data-ng-repeat="claim in vm.claims">
+    <td>{{claim.CustomerID}}</td>
+    <td>{{claim.IncidentDate}}</td>
+    <td>{{claim.ReportDate}}</td>
+    <td>{{claim.Location}}</td>
+    <td>{{claim.StatusID}}</td>
+    <td>
+      <a href="#/details/{{claim.ClaimID}}">Details</a>
+      <a href="#/editclaim/{{claim.ClaimID}}">Edit</a>
+      <a href="#" data-ng-click="vm.confirmDelete()">Delete</a>
+    </td>
+  </tr>
+</table> 

@@ -29,7 +29,7 @@ namespace XPlatInsurance.WebUI.Controllers.api
     // GET api/<controller>/5
     public Models.Claim Get(int id)
     {
-      return ctx.Claims.Include("ClaimDetails").First(c => c.ClaimID == id);
+      return ctx.Claims.First(c => c.ClaimID == id);
     }
 
     // POST api/<controller>

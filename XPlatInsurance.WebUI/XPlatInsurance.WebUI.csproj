@@ -165,9 +165,11 @@
   <ItemGroup>
     <Content Include="angular.html" />
     <Content Include="app\app.js" />
+    <Content Include="claimDetails.html" />
     <Content Include="claimslist.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="editClaim.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
