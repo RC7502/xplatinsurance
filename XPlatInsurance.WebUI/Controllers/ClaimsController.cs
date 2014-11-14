@@ -13,22 +13,23 @@ namespace XPlatInsurance.WebUI.Controllers
 {
     public class ClaimsController : Controller
     {
-        private XPlatInsuranceEntities db = new XPlatInsuranceEntities();
+      private api.ClaimsController claims = new api.ClaimsController();
+      private api.ClaimDetailsController details = new api.ClaimDetailsController();
 
         // GET: Claims
         public ActionResult Index()
         {
-            return View(db.Claims.ToList());
+            return View(claims.Get().ToList());
         }
 
         // GET: Claims/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Claim claim = await db.Claims.FindAsync(id);
+            Claim claim = claims.Get(id.Value);
             if (claim == null)
             {
                 return HttpNotFound();
@@ -47,12 +48,11 @@ namespace XPlatInsurance.WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ClaimID,CustomerID,IncidentDate,ReportDateTimeUtc,Location,StatusID")] Claim claim)
+        public ActionResult Create([Bind(Include = "ClaimID,CustomerID,IncidentDate,ReportDateTimeUtc,Location,StatusID")] Claim claim)
         {
             if (ModelState.IsValid)
             {
-                db.Claims.Add(claim);
-                await db.SaveChangesAsync();
+                claims.Post(claim);
                 return RedirectToAction("Index");
             }
 
@@ -60,13 +60,13 @@ namespace XPlatInsurance.WebUI.Controllers
         }
 
         // GET: Claims/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Claim claim = await db.Claims.FindAsync(id);
+            Claim claim = claims.Get(id.Value);
             if (claim == null)
             {
                 return HttpNotFound();
@@ -79,25 +79,24 @@ namespace XPlatInsurance.WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ClaimID,CustomerID,IncidentDate,ReportDateTimeUtc,Location,StatusID")] Claim claim)
+        public ActionResult Edit([Bind(Include = "ClaimID,CustomerID,IncidentDate,ReportDateTimeUtc,Location,StatusID")] Claim claim)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(claim).State = EntityState.Modified;
-                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(claim);
         }
 
         // GET: Claims/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Claim claim = await db.Claims.FindAsync(id);
+            Claim claim = claims.Get(id.Value);
             if (claim == null)
             {
                 return HttpNotFound();
@@ -108,21 +107,19 @@ namespace XPlatInsurance.WebUI.Controllers
         // POST: Claims/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Claim claim = await db.Claims.FindAsync(id);
-            db.Claims.Remove(claim);
-            await db.SaveChangesAsync();
+            claims.Delete(id);
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> AddDetail(int? id)
+        public ActionResult AddDetail(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Claim claim = await db.Claims.FindAsync(id);
+            Claim claim = claims.Get(id.Value);
             if (claim == null)
             {
                 return HttpNotFound();
@@ -134,17 +131,16 @@ namespace XPlatInsurance.WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddDetail([Bind(Include ="ClaimID,VehicleID,Damage")]ClaimDetail detail)
+        public ActionResult AddDetail([Bind(Include ="ClaimID,VehicleID,Damage")]ClaimDetail detail)
         {
 
             if (ModelState.IsValid)
             {
-                db.ClaimDetails.Add(detail);
-                await db.SaveChangesAsync();
+                details.Post(detail);
                 return RedirectToAction("Details", new { id = detail.ClaimID });
             }
 
-            var claim = db.Claims.FindAsync(detail.ClaimID);
+            var claim = claims.Get(detail.ClaimID);
             ViewBag.Claim = claim;
             return View(detail);
 
@@ -155,7 +151,8 @@ namespace XPlatInsurance.WebUI.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                claims.Dispose();
+                details.Dispose();
             }
             base.Dispose(disposing);
         }
