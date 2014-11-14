@@ -1,0 +1,86 @@
+﻿@model XPlatInsurance.WebUI.Models.Claim
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Claim</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IncidentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IncidentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportDateTimeUtc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportDateTimeUtc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusID)
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <h3>Vehicles</h3>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Vehicle</th>
+            <th>Damage</th>
+            <th></th>
+        </tr>
+        @foreach (var v in Model.ClaimDetails)
+        {
+            <tr>
+                <td>@v.VehicleID</td>
+                <td>@v.Damage</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditDetail", new { id = v.ClaimDetailID })
+                    @Html.ActionLink("Delete", "DeleteDetail", new { id = v.ClaimDetailID })
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.ActionLink("Add Vehicle", "AddDetail", new { id = Model.ClaimID })
+
+</div>
+
+<hr/>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ClaimID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

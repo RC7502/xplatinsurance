@@ -1,0 +1,95 @@
+﻿@model XPlatInsurance.WebUI.Models.ClaimDetail
+@{
+    ViewBag.Title = "Add Claim Details";
+    XPlatInsurance.WebUI.Models.Claim claim = ViewBag.Claim;
+}
+
+<h2>Add Claim Detail</h2>
+
+<h4>Claim</h4>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        CustomerID:
+    </dt>
+
+    <dd>
+        @claim.CustomerID
+    </dd>
+
+    <dt>
+        Incident Date:
+    </dt>
+
+    <dd>
+        @claim.IncidentDate.ToShortDateString()
+    </dd>
+
+    <dt>
+        Report Date:
+    </dt>
+
+    <dd>
+        @claim.ReportDateTimeUtc.ToShortDateString()
+    </dd>
+
+    <dt>
+        Location:
+    </dt>
+
+    <dd>
+        @claim.Location
+    </dd>
+
+    <dt>
+        Status:
+    </dt>
+
+    <dd>
+        @Enum.Parse(typeof(XPlatInsurance.WebUI.Models.ClaimStatus), claim.StatusID.ToString()).ToString()    
+    </dd>
+
+</dl>
+
+@using (Html.BeginForm()) {
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.VehicleID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.VehicleID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VehicleID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Damage, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Damage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Damage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.Hidden("claimId", claim.ClaimID)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </div>
+
+</div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to Claim", "Details", new { id = claim.ClaimID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
