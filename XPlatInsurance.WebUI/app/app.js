@@ -3,7 +3,8 @@
   angular.module("xplat", ["ngRoute", "ngResource"])
     .config(Config)
     .factory("ClaimsFactory", ["$resource", ClaimsFactory])
-    .controller("claimsList", ["ClaimsFactory", ClaimsListController])
+    .factory("WamsFactory", [WamsFactory])
+    .controller("claimsList", ["WamsFactory", ClaimsListController])
     .controller("claimDetails", ["ClaimsFactory", "$routeParams", ClaimDetailsController]);
     
 
@@ -56,6 +57,25 @@
         controller: "claimsList",
         controllerAs: "vm"
       });
+
+  }
+
+  function WamsFactory() {
+
+    var client = new WindowsAzure.MobileServiceClient(
+    "https://xplatinsurange.azure-mobile.net/",
+    "UnOrXupcQCkVQvmuBNlxMcisuQIvQg85"
+    );
+
+    var vm = this;
+    this.query = function(callback) {
+      return client.getTable("claims").read().done(callback);
+    }
+
+    console.log("Client: ");
+    console.log(client);
+
+    return vm;
 
   }
 
