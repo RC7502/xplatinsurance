@@ -2,24 +2,24 @@
 
   angular.module("xplat", ["ngRoute", "ngResource"])
     .config(Config)
-    .factory("Claims", ["$resource", ClaimsFactory])
-    .controller("claimsList", ["Claims", ClaimsListController])
-    .controller("claimDetails", ["Claims", "$routeParams", ClaimDetailsController]);
+    .factory("ClaimsFactory", ["$resource", ClaimsFactory])
+    .controller("claimsList", ["ClaimsFactory", ClaimsListController])
+    .controller("claimDetails", ["ClaimsFactory", "$routeParams", ClaimDetailsController]);
     
 
-  function ClaimsListController(Claims) {
+  function ClaimsListController(ClaimsFactory) {
 
     var vm = this;
-    Claims.query(function(data) {
+    ClaimsFactory.query(function(data) {
       vm.claims = data;
     });
 
   }
 
-  function ClaimDetailsController(Claims, $routeParams) {
+  function ClaimDetailsController(ClaimsFactory, $routeParams) {
 
     var vm = this;
-    Claims.get({id: $routeParams.id}, function(data) {
+    ClaimsFactory.get({id: $routeParams.id}, function(data) {
       vm.thisClaim = data;
     });
 
@@ -35,8 +35,8 @@
 
     return $resource("/api/Claims/:id", null, {
       update: {
-      method: 'PUT' // this method issues a PUT request
-    }
+        method: 'PUT' // this method issues a PUT request
+      }
     });
 
   }

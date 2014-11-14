@@ -10,7 +10,8 @@
 namespace XPlatInsurance.WebUI.Models
 {
     using System;
-    using System.Collections.Generic;
+  using System.Collections.Generic;
+  using System.Runtime.Serialization;
     
     public partial class Claim
     {
@@ -28,4 +29,6 @@ namespace XPlatInsurance.WebUI.Models
     
         public virtual ICollection<ClaimDetail> ClaimDetails { get; set; }
     }
+
+
 }
