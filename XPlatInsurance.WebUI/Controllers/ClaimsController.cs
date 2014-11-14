@@ -83,7 +83,7 @@ namespace XPlatInsurance.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(claim).State = EntityState.Modified;
+              claims.Put(claim.ClaimID, claim);
                 return RedirectToAction("Index");
             }
             return View(claim);

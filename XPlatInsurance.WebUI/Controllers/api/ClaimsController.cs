@@ -9,6 +9,7 @@ using XPlatInsurance.WebUI.Models;
 
 namespace XPlatInsurance.WebUI.Controllers.api
 {
+
   public class ClaimsController : ApiController
   {
 
