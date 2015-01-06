@@ -17,9 +17,9 @@ namespace XPlatInsurance.WebUI.Controllers.api
       new Claim {
         ClaimID=1, 
         CustomerID="4567",
-        IncidentDate=new DateTime(2014,11,12),
+        IncidentDate=new DateTime(2015,1,2),
         ReportDateTimeUtc = DateTime.UtcNow,
-        Location = "Mandalay Bay parking lot",
+        Location = "Kalahari parking lot",
         StatusID = 1,
         ClaimDetails = new List<ClaimDetail> {
           new ClaimDetail() {
