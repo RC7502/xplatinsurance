@@ -12,86 +12,82 @@ namespace XPlatInsurance.WebUI.Controllers.api
   public class ClaimsController : ApiController
   {
 
-    XPlatInsuranceEntities ctx;
+    internal static readonly List<Claim> db = new List<Claim>();
 
-    public ClaimsController()
-    {
-      ctx = new Models.XPlatInsuranceEntities();
-    }
-    
     // GET api/<controller>
     public IEnumerable<Models.Claim> Get()
     {
-      return ctx.Claims;
+      return db;
     }
 
     // GET api/<controller>/5
     public Models.Claim Get(int id)
     {
-      return ctx.Claims.Include("ClaimDetails").First(c => c.ClaimID == id);
+      return db.First(c => c.ClaimID == id);
     }
 
     // POST api/<controller>
     public void Post([FromBody]Models.Claim value)
     {
-      ctx.Claims.Add(value);
-      ctx.SaveChanges();
+      if (db.Count > 0)
+        value.ClaimID = db.Max(c => c.ClaimID) + 1;
+      else
+        value.ClaimID = 1;
+
+      db.Add(value);
     }
 
     // PUT api/<controller>/5
     public void Put(int id, [FromBody]Models.Claim value)
     {
-      ctx.Entry(value).State = EntityState.Modified;
-      ctx.SaveChanges();
+      db.Remove(db.First(c => c.ClaimID == id));
+      db.Add(value);
     }
 
     // DELETE api/<controller>/5
     public void Delete(int id)
     {
-      ctx.Claims.Remove(ctx.Claims.Find(id));
+      db.Remove(db.First(c => c.ClaimID == id));
     }
   }
 
   public class ClaimDetailsController : ApiController
   {
 
-    XPlatInsuranceEntities ctx;
-
-    public ClaimDetailsController()
-    {
-      ctx = new Models.XPlatInsuranceEntities();
-    }
-
     // GET api/<controller>
     public IEnumerable<Models.ClaimDetail> Get()
     {
-      return ctx.ClaimDetails;
+      return null;
     }
 
     // GET api/<controller>/5
     public Models.ClaimDetail Get(int id)
     {
-      return ctx.ClaimDetails.Find(id);
+
+      var theClaim = ClaimsController.db.First(c => c.ClaimDetails.Any(d => d.ClaimDetailID == id));
+      return theClaim != null ? theClaim.ClaimDetails.First(d => d.ClaimDetailID == id) : null;
     }
 
     // POST api/<controller>
     public void Post([FromBody]Models.ClaimDetail value)
     {
-      ctx.ClaimDetails.Add(value);
-      ctx.SaveChanges();
+      var theClaim = ClaimsController.db.First(c => c.ClaimID == value.ClaimID);
+      theClaim.ClaimDetails.Add(value);
     }
 
     // PUT api/<controller>/5
     public void Put(int id, [FromBody]Models.ClaimDetail value)
     {
-      ctx.Entry(value).State = EntityState.Modified;
-      ctx.SaveChanges();
+      var theClaim = ClaimsController.db.First(c => c.ClaimID == value.ClaimID);
+      theClaim.ClaimDetails.Remove(theClaim.ClaimDetails.First(d => d.ClaimDetailID == id));
+      theClaim.ClaimDetails.Add(value);
     }
 
     // DELETE api/<controller>/5
     public void Delete(int id)
     {
-      ctx.ClaimDetails.Remove(ctx.ClaimDetails.Find(id));
+      var theClaim = ClaimsController.db.First(c => c.ClaimDetails.Any(d => d.ClaimDetailID == id));
+      theClaim.ClaimDetails.Remove(theClaim.ClaimDetails.First(d => d.ClaimDetailID == id));
     }
   }
 }

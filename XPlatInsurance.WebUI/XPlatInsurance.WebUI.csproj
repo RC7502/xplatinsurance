@@ -137,27 +137,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Claim.cs">
-      <DependentUpon>ClaimData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClaimData.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClaimData.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClaimData.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClaimData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClaimData.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ClaimData.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ClaimDetail.cs">
-      <DependentUpon>ClaimData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ClaimStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -168,25 +147,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ClaimData.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ClaimData.edmx</DependentUpon>
-      <LastGenOutput>ClaimData.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\ClaimData.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ClaimData.edmx</DependentUpon>
-      <LastGenOutput>ClaimData.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\ClaimData.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ClaimData.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ClaimData.edmx.diagram">
-      <DependentUpon>ClaimData.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
